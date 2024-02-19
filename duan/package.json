@@ -6,9 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server --watch db.json",
+    "start": "concurrently \"json-server --watch db.json -m ./node_modules/json-server-auth --port 3000\" \"npm run dev\""
   },
   "devDependencies": {
     "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "bootstrap": "^5.3.2",
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0",
+    "navigo": "^8.11.1"
   }
 }

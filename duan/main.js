@@ -1,24 +1,27 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import AboutPage from "./pages/Aboutpage";
+import HomePage from "./pages/Homepage";
+import NotFoundPage from "./pages/NotfoundPage";
+import "./style.css";
+import Navigo from "navigo";
+import "./node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./node_modules/bootstrap/dist/js/bootstrap";
+import hadleProductList from "./handles/handleProductList";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const router = new Navigo("/", {
+  linksSelector: "a",
+});
 
-setupCounter(document.querySelector('#counter'))
+const app = document.getElementById("app");
+
+const render = (position, content) => {
+  position.innerHTML = content();
+};
+
+router.on("/", () => render(app, HomePage), {
+  after() {
+    hadleProductList()
+  },
+});
+router.on("/about", () => render(app, AboutPage));
+router.notFound(() => render(app, NotFoundPage));
+router.resolve();
